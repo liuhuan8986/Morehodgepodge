@@ -40,7 +40,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     public void login(String Mobile, String Code, String RegisterType, String RegisterID){
         getView().showLoading();
         Observable<ResultData<UserInfo>> observable = iLoginModel.login(Mobile,Code,RegisterType,RegisterID);
-        compositeDisposable.add(observable.subscribe());
         observable.subscribe(new CommonObserver<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {

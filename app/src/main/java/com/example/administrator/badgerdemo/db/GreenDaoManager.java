@@ -3,6 +3,7 @@ package com.example.administrator.badgerdemo.db;
 import android.content.Context;
 
 import com.example.administrator.badgerdemo.BuildConfig;
+import com.example.administrator.badgerdemo.MyApplication;
 import com.example.administrator.badgerdemo.bean.DaoMaster;
 import com.example.administrator.badgerdemo.bean.DaoSession;
 
@@ -18,11 +19,11 @@ public class GreenDaoManager {
     private DaoSession daoSession;
     // 开启日志输出
 
-    public static GreenDaoManager getInstance(Context context){
+    public static GreenDaoManager getInstance(){
         if(mInstance==null){
             synchronized (GreenDaoManager.class){
                 if(mInstance==null){
-                    mInstance =new GreenDaoManager(context);
+                    mInstance =new GreenDaoManager(MyApplication.getInstance());
                 }
             }
         }

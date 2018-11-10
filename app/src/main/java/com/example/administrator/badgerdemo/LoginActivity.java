@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.example.administrator.badgerdemo.bean.UserInfo;
+import com.example.administrator.badgerdemo.db.GreenDaoManager;
 import com.example.administrator.badgerdemo.presenter.LoginPresenter;
 import com.example.administrator.badgerdemo.rxjava.FileUploadCombination;
 import com.example.administrator.badgerdemo.rxjava.MultiFileUploadObserver;
@@ -41,8 +44,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getPresenter().login("13570649568","000111","android","");
-                testUplaods2();
+                getPresenter().login("13570649568","000111","android","");
+                //testUplaods2();
             }
         });
 
@@ -51,6 +54,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     @Override
     public void setData(UserInfo userInfo) {
         //textView.setText(JSON.toJSONString(userInfo));
+        GreenDaoManager.getInstance().getDaoSession().getUserInfoDao().save(userInfo);
+        List<UserInfo> list = GreenDaoManager.getInstance().getDaoSession().getUserInfoDao().loadAll();
+        textView.setText(JSON.toJSONString(list));
     }
 
     @Override
