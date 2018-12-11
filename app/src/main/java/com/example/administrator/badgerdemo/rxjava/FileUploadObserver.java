@@ -13,6 +13,9 @@ public abstract class FileUploadObserver<T> extends CommonObserver<T> {
 
     // 监听进度的改变
     public void onProgressChange(long bytesWritten, long contentLength) {
-        onProgress((int) (bytesWritten * 100 / contentLength));
+        if(contentLength>0){
+            onProgress((int) (bytesWritten * 100 / contentLength));
+        }
+
     }
 }

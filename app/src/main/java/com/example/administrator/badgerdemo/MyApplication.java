@@ -6,8 +6,10 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.facebook.stetho.Stetho;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -32,6 +34,8 @@ public class MyApplication extends Application {
         Bugly.init(this, BuildConfig.BUGLY_ID, true);
         instance = this;
         setRxJava2ErrorHandler();
+        Stetho.initializeWithDefaults(this);
+        this.deleteDatabase("lh_test.db");
     }
 
     public static MyApplication getInstance(){
@@ -62,6 +66,8 @@ public class MyApplication extends Application {
         RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                Log.e("RxJava2ErrorHandler",throwable.getMessage());
+                CrashReport.postCatchedException(throwable);
             }
         });
     }

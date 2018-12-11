@@ -11,7 +11,7 @@ import org.greenrobot.greendao.query.QueryBuilder;
 
 public class GreenDaoManager {
     // 数据库名称
-    private static final String DB_NAME="lh_test";
+    private static final String DB_NAME="lh_test.db";
     private static GreenDaoManager mInstance;
     // DaoMaster
     private DaoMaster daoMaster;
@@ -32,8 +32,9 @@ public class GreenDaoManager {
     private GreenDaoManager(Context context){
         if(mInstance==null){
             MySQLiteOpenHelper helper = new MySQLiteOpenHelper(context,DB_NAME);
-            //DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
-            daoMaster = new DaoMaster(helper.getWritableDatabase());
+            DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
+            daoMaster = new DaoMaster(helper.getEncryptedWritableDb("123456"));
+//            daoMaster = new DaoMaster(helper.getWritableDatabase());
             daoSession = daoMaster.newSession();
             // 开启日志输出
             if(BuildConfig.DEBUG){
